@@ -68,7 +68,7 @@ def format_text(url):
 @client.event
 async def on_ready():
     print(f'connected as: {client.user}')
-    await client.change_presence(status=discord.Status.online, activity=discord.Game(name='!help', url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'))
+    await client.change_presence(status=discord.Status.online, activity=discord.Streaming(name='Plant Simulator', url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'))
 
 
 @client.event
