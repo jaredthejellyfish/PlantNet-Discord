@@ -73,7 +73,7 @@ async def on_message(message):
             
             embed = format_text(url)
 
-            await msg.edit(content="", embed=embed, reference=message)
+            await msg.edit(content="", embed=embed)
         else:
             await message.channel.send('Nothing to find here...')
 
