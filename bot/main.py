@@ -1,4 +1,3 @@
-from msilib.schema import Error
 import discord
 import json
 import requests
