@@ -28,7 +28,10 @@ def plant_finder(url):
     s = requests.Session()
     response = s.send(prepared)
 
-    results = json.loads(response.text)["results"][0]
+    try:
+        results = json.loads(response.text)["results"][0]
+    except:
+        raise ValueError("No results found")
 
     commonNames = results["species"]["commonNames"]
     family = results["species"]["family"]["scientificNameWithoutAuthor"]
@@ -75,10 +78,11 @@ async def on_message(message):
             url = message.attachments[0].url
 
             msg = await message.channel.send(f"Solving...", reference=message)
-
-            embed = format_text(url)
-
-            await msg.edit(content="", embed=embed)
+            try:
+                embed = format_text(url)
+                await msg.edit(content="", embed=embed)
+            except ValueError:
+                await msg.edit(content="There was an error solving the image. Please try again.")
         else:
             await message.channel.send('Nothing to find here...')
 
