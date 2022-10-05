@@ -81,8 +81,8 @@ async def on_message(message):
             try:
                 embed = format_text(url)
                 await msg.edit(content="", embed=embed)
-            except:
-                await msg.edit(content="There was an error solving the image. Please try again later.")
+            except Exception as e:
+                await msg.edit(content=f"There was an error solving the image. Please try again later. \n{e}")
         else:
             await message.channel.send('Nothing to find here...')
 
