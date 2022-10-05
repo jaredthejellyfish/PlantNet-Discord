@@ -1,3 +1,4 @@
+from msilib.schema import Error
 import discord
 import json
 import requests
@@ -53,8 +54,13 @@ def format_text(url):
     embed = discord.Embed(title=scientificName, description=wikipedia.summary(
         scientificName, sentences=1), color=0x246815)
     embed.set_thumbnail(url=url)
-    embed.add_field(name="Family", value=wikipedia.summary(
-        family, sentences=1), inline=True)
+    try:
+        embed.add_field(name="Family", value=wikipedia.summary(
+            family, sentences=1), inline=True)
+    except:
+        embed.add_field(
+            name="Family", value=f"This plant is part of the {family} family.", inline=True)
+
     embed.add_field(name="Common Names:", value=commonNamesString, inline=True)
 
     return embed
@@ -82,7 +88,7 @@ async def on_message(message):
                 embed = format_text(url)
                 await msg.edit(content="", embed=embed)
             except Exception as e:
-                await msg.edit(content=f"There was an error solving the image. Please try again later. \n{e}")
+                await msg.edit(content=f"There was an error solving the image. Please try again later. \nHere is the error trace in case an admin needs it: \n{e}")
         else:
             await message.channel.send('Nothing to find here...')
 
