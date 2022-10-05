@@ -82,7 +82,7 @@ async def on_message(message):
                 embed = format_text(url)
                 await msg.edit(content="", embed=embed)
             except ValueError:
-                await msg.edit(content="There was an error solving the image. Please try again.")
+                await msg.edit(content="There was an error solving the image. Please try again later.")
         else:
             await message.channel.send('Nothing to find here...')
 
