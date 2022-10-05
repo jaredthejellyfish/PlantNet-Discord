@@ -4,6 +4,8 @@ import requests
 import wikipedia
 import os
 
+print("Starting bot...")
+
 DISCORD_TOKEN = os.environ.get('DISCORD_TOKEN')
 PLANTNET_TOKEN = os.environ.get('PLANTNET_TOKEN')
 
