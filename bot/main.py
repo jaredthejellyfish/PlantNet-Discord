@@ -40,10 +40,10 @@ def plant_finder(url):
     commonNamesString = ""
     if len(commonNames) > 1:
         for name in commonNames:
-            commonNamesString += f"  • {name}\n"
+            commonNamesString += f"• {name}\n"
 
     elif len(commonNames) == 1:
-        commonNamesString = f"  • {commonNames[0]}"
+        commonNamesString = f"• {commonNames[0]}"
 
     return commonNamesString, family, scientificName
 
