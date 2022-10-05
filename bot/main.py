@@ -68,6 +68,7 @@ def format_text(url):
 @client.event
 async def on_ready():
     print(f'connected as: {client.user}')
+    await client.change_presence(status=discord.Status.online, activity=discord.Game(name='!help', url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'))
 
 
 @client.event
@@ -75,8 +76,23 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('!hewo'):
-        await message.channel.send('Hello!')
+    if message.content.startswith('!help'):
+        await message.channel.send('Hello and welcome to PlantNET! \nTo use this bot, simply send a picture of a plant with the `!find` command and the bot will identify it for you.')
+
+    if not message.guild:
+        if not message.content.startswith('!find'):
+            if message.attachments:
+                url = message.attachments[0].url
+
+                msg = await message.channel.send(f"Solving...", reference=message)
+                try:
+                    embed = format_text(url)
+                    await msg.edit(content="", embed=embed)
+                except Exception as e:
+                    await msg.edit(content=f"There was an error solving the image. Please try again later. \nHere is the error trace in case an admin needs it: \n{e}")
+        else:
+            await message.channel.send('You cannot use commands in direct messages so please just send me the image you are looking for me to inspect. :D')
+        return
 
     if message.content.startswith('!find'):
         if message.attachments:
@@ -90,5 +106,7 @@ async def on_message(message):
                 await msg.edit(content=f"There was an error solving the image. Please try again later. \nHere is the error trace in case an admin needs it: \n{e}")
         else:
             await message.channel.send('Nothing to find here...')
+    
+
 
 client.run(DISCORD_TOKEN)
