@@ -69,11 +69,11 @@ async def on_message(message):
         if message.attachments:
             url = message.attachments[0].url
 
-            msg = await message.channel.send(f"Solving...")
+            msg = await message.channel.send(f"Solving...",reference=message)
             
             embed = format_text(url)
 
-            await msg.edit(content="", embed=embed)
+            await msg.edit(content="", embed=embed, reference=message)
         else:
             await message.channel.send('Nothing to find here...')
 
