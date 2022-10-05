@@ -14,6 +14,7 @@ intents.message_content = True
 
 client = discord.Client(intents=intents)
 
+
 def plant_finder(url):
     img = requests.get(url).content
     api_endpoint = f"https://my-api.plantnet.org/v2/identify/all?api-key={PLANTNET_TOKEN}"
@@ -32,7 +33,6 @@ def plant_finder(url):
     commonNames = results["species"]["commonNames"]
     family = results["species"]["family"]["scientificNameWithoutAuthor"]
     scientificName = results["species"]["scientificNameWithoutAuthor"]
-    confidence = round((float(results["score"]) * 100), 1)
 
     commonNamesString = ""
     if len(commonNames) > 1:
@@ -44,18 +44,23 @@ def plant_finder(url):
 
     return commonNamesString, family, scientificName
 
+
 def format_text(url):
     commonNamesString, family, scientificName = plant_finder(url)
-    embed = discord.Embed(title=scientificName, description=wikipedia.summary(scientificName, sentences=1), color=0x246815)
+    embed = discord.Embed(title=scientificName, description=wikipedia.summary(
+        scientificName, sentences=1), color=0x246815)
     embed.set_thumbnail(url=url)
-    embed.add_field(name="Family", value=wikipedia.summary(family, sentences=1), inline=True)
+    embed.add_field(name="Family", value=wikipedia.summary(
+        family, sentences=1), inline=True)
     embed.add_field(name="Common Names:", value=commonNamesString, inline=True)
-   
+
     return embed
+
 
 @client.event
 async def on_ready():
     print(f'connected as: {client.user}')
+
 
 @client.event
 async def on_message(message):
@@ -64,13 +69,13 @@ async def on_message(message):
 
     if message.content.startswith('!hewo'):
         await message.channel.send('Hello!')
-    
+
     if message.content.startswith('!find'):
         if message.attachments:
             url = message.attachments[0].url
 
-            msg = await message.channel.send(f"Solving...",reference=message)
-            
+            msg = await message.channel.send(f"Solving...", reference=message)
+
             embed = format_text(url)
 
             await msg.edit(content="", embed=embed)
