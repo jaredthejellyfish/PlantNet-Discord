@@ -76,9 +76,6 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.attachements:
-        await message.channel.send(content=message.attachments[0].url)
-
     if message.content.startswith('!help'):
         await message.channel.send('Hello and welcome to PlantNET! \nTo use this bot, simply send a picture of a plant with the `!find` command and the bot will identify it for you.')
 
