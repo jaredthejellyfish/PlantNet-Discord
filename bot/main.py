@@ -75,8 +75,8 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-        
-    if message.attachement:
+
+    if message.attachements:
         await message.channel.send(content=message.attachments[0].url)
 
     if message.content.startswith('!help'):
